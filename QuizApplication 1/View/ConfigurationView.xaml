@@ -29,7 +29,10 @@
                 </StackPanel>
             </StackPanel>
             
-                <ListView Height="411" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding ActivePack.Questions}" DisplayMemberPath="Query"
+                <ListView Height="411" 
+                          ScrollViewer.CanContentScroll="True" 
+                          ItemsSource="{Binding ActivePack.Questions}" 
+                          DisplayMemberPath="Query"
                           />
             
         </StackPanel>
