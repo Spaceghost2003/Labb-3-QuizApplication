@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuizApplication_1.View"
+             DataContext="{Binding ConfigurationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -26,13 +27,15 @@
                 <MenuItem Header="_Remove question" 
                           />
                 <MenuItem Header="_Pack Options"
-                          Command="{Binding PlayerViewModel.UpdateButtonCommand}"/>
+                          />
 
             </MenuItem>
 
             <MenuItem Header="_View">
-                <MenuItem Header="_Play"
-                          
+                <MenuItem 
+                    Header="_Play"
+                    
+                    Command="{Binding PlayQuizCommand}"
                           />
                 <MenuItem Header="_Fullscreen"/>
 

@@ -16,6 +16,7 @@ namespace QuizApplication_1.ViewModel
 
         private DispatcherTimer timer;
         private string _testData;
+        private object mainWindowViewModel;
 
         public string testData { get => _testData;
             private set 
@@ -24,7 +25,6 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
-
 
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
@@ -37,18 +37,10 @@ namespace QuizApplication_1.ViewModel
             timer.Tick += Timer_Tick;
             //timer.Start();
 
-            UpdateButtonCommand = new RelayCommand(UpdateButton, CanUpdateButton);
         }
+      
 
-        private bool CanUpdateButton(object? arg)
-        {
-            return testData.Length<20;
-        }
-        private void UpdateButton(object obj)
-        {
-            testData += "x";
-            UpdateButtonCommand.RaiseCanExecuteChanged();
-        }
+
 
         private void Timer_Tick(object? sender, EventArgs e)
         {

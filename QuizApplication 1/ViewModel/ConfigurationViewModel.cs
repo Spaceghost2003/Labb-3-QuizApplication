@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace QuizApplication_1.ViewModel
 {
@@ -17,11 +18,32 @@ namespace QuizApplication_1.ViewModel
         
         private readonly MainWindowViewModel? mainWindowViewModel;
 
+        private Difficulty _selectedDifficulty;
+
+        
+        public Difficulty SelectedDifficulty
+        {
+            get => _selectedDifficulty;
+            set
+            {
+                _selectedDifficulty = value;
+                OnPropertyChanged();
+            }
+        }
+
+       
+        public IEnumerable<Difficulty> DifficultyOptions => Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>();
+    
+
+
         public RelayCommand FillQuestionsCommand { get; }
         public RelayCommand AddQuestionCommand { get; }
         public RelayCommand RemoveQuestionCommand { get; }
-
         public RelayCommand OpenModificationWindowCommand { get; }
+        public RelayCommand PlayQuizCommand { get; }
+
+
+        private bool _canLoadQuestions = true;
 
         private Question _selectedQuestion;
 
@@ -33,6 +55,19 @@ namespace QuizApplication_1.ViewModel
                 _selectedQuestion = value;
                 OnPropertyChanged();
                 RemoveQuestionCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+
+        private string _inputName;
+
+        public string InputName
+        {
+            get { return _inputName; }
+            set 
+            {
+                _inputName = value; 
+                OnPropertyChanged();
             }
         }
 
@@ -95,28 +130,44 @@ namespace QuizApplication_1.ViewModel
 
         public ConfigurationViewModel(MainWindowViewModel mainWindowViewModel) 
         {
+            
     
-
+            
             this.mainWindowViewModel = mainWindowViewModel;
-            FillQuestionsCommand = new RelayCommand(FillQuestions);
+
+
+            FillQuestionsCommand = new RelayCommand(FillQuestions,CanFillQuestions);
             AddQuestionCommand = new RelayCommand(AddQuestion);
             RemoveQuestionCommand = new RelayCommand(RemoveQuestion,CanRemoveQuestion);
             OpenModificationWindowCommand = new RelayCommand(OpenModificationWindow);
+            PlayQuizCommand = new RelayCommand(PlayQuiz);
         }
 
         public QuestionPackViewModel? ActivePack {get => mainWindowViewModel.ActivePack;}
+        public QuestionPackViewModel? TestPack { get => mainWindowViewModel.TestPack;}
 
 
         public void FillQuestions(object obj)
         {
-            Question question = new Question("test", "test", "test", "test", "test");
-            Question question2 = new Question("test1", "test", "test", "test", "test");
+            Question question = new Question("Who is the prime minister of Sweden?", "Ulf Kristersson", "Mona Sahlin", "Ulf Lundell", "Donald Trump");
+            Question question2 = new Question("Who is the protagonist of Metal Gear Solid?", "Solid Snake", "Super Mario", "Zelda", "John Halo");
+            Question question3 = new Question("What is the capital of Vietnam", "Ho Chi Minh City", "Hanoi", "tokyo", "Paris");
+            Question question4 = new Question("What is 3+5?", "8", "2", "forty five", "5");
+            Question question5 = new Question("Who founded Microsoft?", "Bill Gates", "John Microsoft", "Steve Jobs", "Michael Jackson");
 
             ActivePack.Questions.Add(question);
             ActivePack.Questions.Add(question2);
-            ActivePack.Questions.Add(question);
+            ActivePack.Questions.Add(question3);
+            ActivePack.Questions.Add(question4);
+            ActivePack.Questions.Add(question5);
 
+            _canLoadQuestions = false;
 
+        }
+
+        public bool CanFillQuestions(object? arg)
+        {
+            return _canLoadQuestions;
         }
 
         public void AddQuestion(object obj)
@@ -143,6 +194,21 @@ namespace QuizApplication_1.ViewModel
         {
             ModificationView modificationView = new ModificationView();
             modificationView.ShowDialog();
+        }
+
+        public void PlayQuiz(object obj)
+        {
+            var newWindow = new Window();
+
+            var userControl = new PlayerView();
+
+            newWindow.Content = userControl;
+
+            newWindow.Show();
+            
+            newWindow.Width = 700;
+            newWindow.Height = 500;
+
         }
 
     }

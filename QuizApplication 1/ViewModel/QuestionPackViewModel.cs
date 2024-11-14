@@ -14,6 +14,8 @@ namespace QuizApplication_1.ViewModel
     {
         private readonly QuestionPack model;
 
+        
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public string Name { 
@@ -43,8 +45,6 @@ namespace QuizApplication_1.ViewModel
             }
         }
 
-        //om man stoppar in ett questionpack i denna så kommer den automatiskt skapa en OC
-        //med frågorna i paketet
         public QuestionPackViewModel(QuestionPack model)
         {
             this.model = model;

@@ -18,11 +18,12 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="center">
             <TextBlock Text="Pack Name:" FontSize="16" FontWeight="Bold"/>
-            <TextBox Text="{Binding ActivePack.Name}"/>
+            <TextBox Text="{Binding ActivePack.Name, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center">
             <TextBlock Text="Difficulty" FontSize="16" FontWeight="Bold"/>
-            <ComboBox ItemsSource="{Binding ActivePack.Difficulty}"/>
+            <ComboBox ItemsSource="{Binding DifficultyOptions}"
+          SelectedItem="{Binding SelectedDifficulty}"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" >
             <TextBlock Text="Time Limit:" FontSize="16" FontWeight="Bold"/>

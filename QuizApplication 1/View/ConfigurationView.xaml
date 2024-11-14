@@ -16,8 +16,13 @@
 
         <StackPanel Grid.Column="0">
             <StackPanel Orientation="Vertical" Height="Auto">
-                <TextBlock Text="{Binding ActivePack.Name}" FontWeight="Bold"/>
+                <TextBlock Text="{Binding ActivePack.Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  >
+                    <Button
+                        Content="Load default Questions"
+                        HorizontalAlignment="Right"
+                        Command="{Binding FillQuestionsCommand}"
+                            />
 
                     <Button  HorizontalAlignment="Right" Content="Modify"
                              Command="{Binding OpenModificationWindowCommand}"/>
