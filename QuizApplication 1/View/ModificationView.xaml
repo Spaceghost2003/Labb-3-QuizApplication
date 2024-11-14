@@ -1,0 +1,33 @@
+﻿<Window x:Class="QuizApplication_1.View.ModificationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuizApplication_1.View"
+        DataContext="{Binding ConfigurationViewModel}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow"
+        Title="Modify Question" Height="200" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="center">
+            <TextBlock Text="Pack Name:" FontSize="16" FontWeight="Bold"/>
+            <TextBox Text="{Binding ActivePack.Name}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center">
+            <TextBlock Text="Difficulty" FontSize="16" FontWeight="Bold"/>
+            <ComboBox ItemsSource="{Binding ActivePack.Difficulty}"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="2" >
+            <TextBlock Text="Time Limit:" FontSize="16" FontWeight="Bold"/>
+            <Slider Minimum="1" Maximum="120" TickFrequency="5"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

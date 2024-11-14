@@ -38,7 +38,7 @@ namespace QuizApplication_1.ViewModel
 
 
 		
-		
+	
 
     }
 }
