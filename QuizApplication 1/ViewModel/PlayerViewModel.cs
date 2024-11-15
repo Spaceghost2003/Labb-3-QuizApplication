@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace QuizApplication_1.ViewModel
@@ -19,8 +20,21 @@ namespace QuizApplication_1.ViewModel
         private DispatcherTimer timer;
 
 
-        Question ActiveQuestion = new Question("test", "", "", "", "");
+     /*   Question ActiveQuestion = new Question("test", "", "", "", "");*/
 
+        private Question _activeQuestion;
+
+        public Question ActiveQuestion
+        {
+            get { return _activeQuestion; }
+            set 
+            { 
+                _activeQuestion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand AnswerCommand { get; }
         public RelayCommand StartQuizCommand { get; }
 
         private string _displayedQuery;
@@ -125,36 +139,84 @@ namespace QuizApplication_1.ViewModel
 
         public PlayerViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            ButtonAnswer1 = "also a test";
-            ButtonAnswer2 = "just a test";
+
 
             this.mainWindowViewModel = mainWindowViewModel;
-            StartQuizCommand = new RelayCommand(Testing);
+            StartQuizCommand = new RelayCommand(LoadQuestion);
+            AnswerCommand = new RelayCommand(CheckAnswer);
             Random rnd = new Random(); 
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(60);
+            timer.Interval = TimeSpan.FromSeconds(1);
             
             timer.Tick += Timer_Tick;
 
         }
 
-        int indexer = 0;
+       /* int indexer = 0;*/
 
-        public void Testing(object? obj)
+        private  int _indexer;
+
+        public  int Indexer
         {
-            ButtonAnswer1 = "this is a test";
+            get { return _indexer; }
+            set 
+            { 
+                _indexer = value;
+                OnPropertyChanged();
+            }
         }
+
+        private int _points;
+
+        public int Points
+        {
+            get { return _points; }
+            set
+            { 
+                _points = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        private string wrongAnswer;
+
+        public  string WrongAnswer
+        {
+            get { return wrongAnswer; }
+            set 
+            { 
+                wrongAnswer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _inputAnswer;
+
+        public string  InputAnswer
+        {
+            get { return _inputAnswer; }
+            set
+            {
+                _inputAnswer = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
 
         public void LoadQuestion(Object obj)
         {
             timer.Start();
-/*            if(indexer <= ActivePack.Questions.Count)
+           
+            if (Indexer >= ActivePack.Questions.Count)
             {
+                timer.Stop();
                 return;
-            }*/
+            }
 
-            ActiveQuestion = ActivePack.Questions[indexer];
+            ActiveQuestion = ActivePack.Questions[Indexer];
 
             DisplayedQuery = ActiveQuestion.Query;
             CorrectAnswer = ActiveQuestion.CorrectAnswer;
@@ -162,39 +224,59 @@ namespace QuizApplication_1.ViewModel
             IncorrectAnswer2 = ActiveQuestion.IncorrectAnswers[1];
             IncorrectAnswer3 = ActiveQuestion.IncorrectAnswers[2];
 
-            ObservableCollection<string> shuffledQuestions = [CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3];
+            ObservableCollection<string> shuffledQuestions = new ObservableCollection<string> 
+            { CorrectAnswer, IncorrectAnswer1, IncorrectAnswer2, IncorrectAnswer3 };
 
             ShuffleObservableCollection(shuffledQuestions);
             
-            ButtonAnswer1 = "test input";
+            ButtonAnswer1 = shuffledQuestions[0];
             ButtonAnswer2 = shuffledQuestions[1];
             ButtonAnswer3 = shuffledQuestions[2];
             ButtonAnswer4 = shuffledQuestions[3];
 
-            
-           
+            InputAnswer = string.Empty;
+
         }
         public void ShuffleObservableCollection<T>(ObservableCollection<T> collection)
         {
-            
-            var tempList = collection.ToList();
 
-            
             var random = new Random();
-            tempList = tempList.OrderBy(x => random.Next()).ToList();
-
-            
-            collection.Clear();
-            foreach (var item in tempList)
+            for (int i = collection.Count - 1; i > 0; i--)
             {
-                collection.Add(item);
+                int j = random.Next(i + 1);
+                (collection[i], collection[j]) = (collection[j], collection[i]); // Swap
             }
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            indexer++;
+            Indexer++;
             
         }
+
+        public void CheckAnswer(object answer)
+        {
+            string selectedAnswer = answer as string; // 'answer' is passed from the UI
+
+            if (selectedAnswer == ActiveQuestion.CorrectAnswer)
+            {
+                InputAnswer = $"That is the correct Answer! you get one point!";
+                Points++;
+                Indexer++;
+                return;
+            }
+            else
+            {
+                WrongAnswer = $"That is the wrong answer, the correct answer is{ActiveQuestion.CorrectAnswer}";
+                Indexer++;
+                return;
+            }
+
+            
+        }
+
+
+
+
     }
 }

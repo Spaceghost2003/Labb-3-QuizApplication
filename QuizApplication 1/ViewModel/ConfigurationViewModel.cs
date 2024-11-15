@@ -1,11 +1,14 @@
 ﻿using QuizApplication_1.Command;
 using QuizApplication_1.Model;
+using QuizApplication_1.Service;
 using QuizApplication_1.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
@@ -33,14 +36,15 @@ namespace QuizApplication_1.ViewModel
 
        
         public IEnumerable<Difficulty> DifficultyOptions => Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>();
-    
 
 
+        public RelayCommand SaveQuestionPackCommand { get;}
         public RelayCommand FillQuestionsCommand { get; }
         public RelayCommand AddQuestionCommand { get; }
         public RelayCommand RemoveQuestionCommand { get; }
         public RelayCommand OpenModificationWindowCommand { get; }
         public RelayCommand PlayQuizCommand { get; }
+        public RelayCommand LoadQuestionCommand { get; }
 
 
         private bool _canLoadQuestions = true;
@@ -136,12 +140,13 @@ namespace QuizApplication_1.ViewModel
             
             
             this.mainWindowViewModel = mainWindowViewModel;
-
+            SaveQuestionPackCommand = new RelayCommand(SavePack);
             FillQuestionsCommand = new RelayCommand(FillQuestions,CanFillQuestions);
             AddQuestionCommand = new RelayCommand(AddQuestion);
             RemoveQuestionCommand = new RelayCommand(RemoveQuestion,CanRemoveQuestion);
             OpenModificationWindowCommand = new RelayCommand(OpenModificationWindow);
             PlayQuizCommand = new RelayCommand(PlayQuiz);
+            LoadQuestionCommand = new RelayCommand(LoadPack);
         }
 
         public QuestionPackViewModel? ActivePack {get => mainWindowViewModel.ActivePack;}
@@ -206,6 +211,55 @@ namespace QuizApplication_1.ViewModel
 
 
         }
+        
+        public void SavePack(object obj)
+        {
+            string filename = "QuestionPack.Json";
 
+            QuestionPackSaver.SaveToJson(ActivePack, filename);
+        }
+
+
+        public void LoadPack(object obj)
+        {
+          QuestionPackViewModel loadedPack = new QuestionPackViewModel(new QuestionPack(""));
+          QuestionPackViewModel setter = LoadFromJson("QuestionPack.Json");
+          loadedPack = setter;    
+        }
+
+
+        public static QuestionPackViewModel LoadFromJson(string fileName)
+        {
+            
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "QuizApplication");
+
+            
+            Directory.CreateDirectory(appDataPath);
+
+            string filePath = Path.Combine(appDataPath, fileName);
+
+            // Check if the file exists
+            if (!File.Exists(filePath))
+            {
+                return null; // Or handle the error as needed
+            }
+
+            // Read the JSON content from the file
+            string json = File.ReadAllText(filePath);
+
+            // Deserialize the JSON to the QuestionPack object
+            var questionPackViewModel = JsonSerializer.Deserialize<QuestionPackViewModel>(json);
+
+            if (questionPackViewModel == null)
+            {
+                return null; // Or handle deserialization failure
+            }
+
+            // Convert to ViewModel
+           
+
+            return questionPackViewModel;
+        }
     }
 }
+

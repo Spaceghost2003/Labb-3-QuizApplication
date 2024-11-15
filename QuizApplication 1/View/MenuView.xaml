@@ -13,6 +13,11 @@
 
                 <MenuItem Header="_New Question Pack" 
                           />
+                <MenuItem Header="_Save Question Pack"
+                          Command="{Binding SaveQuestionPackCommand}"/>
+
+                <MenuItem Header="Load Question"
+                          Command="{Binding LoadQuestionCommand}"/>
 
                 <Separator />
 
