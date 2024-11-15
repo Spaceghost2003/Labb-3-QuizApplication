@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="QuizApplication_1.View.PlayerView"
+﻿<Window x:Class="QuizApplication_1.View.PlayerViewWindowxaml"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Start Quiz" /> 
+        <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Start Quiz" />
         <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center">
             <TextBlock Text="{Binding ActiveQuestion.Query}" FontSize="25" FontWeight="Bold" Margin="0 0 0 20"/>
             <Grid>
@@ -20,7 +20,9 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <!--<Button --><!--Content="{Binding testData, UpdateSourceTrigger=PropertyChanged--><!--}"-->
+                <!--<Button -->
+                <!--Content="{Binding testData, UpdateSourceTrigger=PropertyChanged-->
+                <!--}"-->
                 <Button  Grid.Column="0" Grid.Row="0" Content="{Binding ButtonAnswer1, UpdateSourceTrigger=PropertyChanged}" />
                 <Button  Grid.Column="1" Grid.Row="0" Content="{Binding ButtonAnswer2, UpdateSourceTrigger=PropertyChanged}" />
                 <Button Grid.Column="0" Grid.Row="1" Content="{Binding ButtonAnswer3, UpdateSourceTrigger=PropertyChanged}" />
@@ -29,6 +31,5 @@
 
             </Grid>
         </StackPanel>
-            
     </Grid>
-</UserControl>
+</Window>

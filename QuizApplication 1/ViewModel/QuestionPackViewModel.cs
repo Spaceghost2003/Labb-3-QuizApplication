@@ -53,6 +53,10 @@ namespace QuizApplication_1.ViewModel
         }
         public ObservableCollection<Question> Questions { get; }
 
-
+        public Question GetNextQuestion(int index)
+        {
+           
+            return Questions.ElementAtOrDefault(index);
+        }
     }
 }

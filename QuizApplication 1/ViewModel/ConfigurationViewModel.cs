@@ -128,13 +128,14 @@ namespace QuizApplication_1.ViewModel
         }
 
 
+        
         public ConfigurationViewModel(MainWindowViewModel mainWindowViewModel) 
         {
             
     
             
+            
             this.mainWindowViewModel = mainWindowViewModel;
-
 
             FillQuestionsCommand = new RelayCommand(FillQuestions,CanFillQuestions);
             AddQuestionCommand = new RelayCommand(AddQuestion);
@@ -146,7 +147,7 @@ namespace QuizApplication_1.ViewModel
         public QuestionPackViewModel? ActivePack {get => mainWindowViewModel.ActivePack;}
         public QuestionPackViewModel? TestPack { get => mainWindowViewModel.TestPack;}
 
-
+        public PlayerViewModel OpenPlayerView { get => mainWindowViewModel.PlayerViewModel; }
         public void FillQuestions(object obj)
         {
             Question question = new Question("Who is the prime minister of Sweden?", "Ulf Kristersson", "Mona Sahlin", "Ulf Lundell", "Donald Trump");
@@ -184,6 +185,9 @@ namespace QuizApplication_1.ViewModel
             }
         }
 
+
+
+
         private bool CanRemoveQuestion(object arg)
         {
             return SelectedQuestion != null;
@@ -198,16 +202,8 @@ namespace QuizApplication_1.ViewModel
 
         public void PlayQuiz(object obj)
         {
-            var newWindow = new Window();
+           mainWindowViewModel.CurrentView = new PlayerView();
 
-            var userControl = new PlayerView();
-
-            newWindow.Content = userControl;
-
-            newWindow.Show();
-            
-            newWindow.Width = 700;
-            newWindow.Height = 500;
 
         }
 

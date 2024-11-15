@@ -19,6 +19,6 @@
         </Grid.RowDefinitions>
 
         <View:MenuView Grid.Row="0"/>
-        <View:ConfigurationView Grid.Row="1"/>
+        <ContentControl Content="{Binding CurrentView}" Grid.Row="1"/>
     </Grid>
 </Window>

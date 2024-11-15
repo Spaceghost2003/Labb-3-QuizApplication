@@ -39,6 +39,12 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
-                
+
+        public QuestionViewModel(Question model)
+        {
+      
+
+        }
+
     }
 }

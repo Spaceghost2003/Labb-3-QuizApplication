@@ -14,7 +14,16 @@ namespace QuizApplication_1.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
 
-     
+     /* _______________________________________________________________________________________
+      |
+      |      TO DO:
+	  |	     Find place to put Loadquestion method
+      |		 Fix check for answer
+      |		 fix JSON
+      |
+      |
+      |                                      
+      |_____________________________________________________________________________________________*/
 
 
         
@@ -55,10 +64,22 @@ namespace QuizApplication_1.ViewModel
 		}
 
 
-		public MainWindowViewModel()
+        private object _currentView;
+
+        public object CurrentView
+        {
+            get => _currentView;
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged(nameof(CurrentView));
+            }
+        }
+
+        public MainWindowViewModel()
 		{
 
-			
+			CurrentView = new ConfigurationView();
             PlayerViewModel = new PlayerViewModel(this);
 			ConfigurationViewModel = new ConfigurationViewModel(this);
 			ActivePack = new QuestionPackViewModel(new QuestionPack("Active Question Pack"));
@@ -72,7 +93,7 @@ namespace QuizApplication_1.ViewModel
 		
 	
 
-        //---------------------------------------------------------------------------------------
+       
 
 
 

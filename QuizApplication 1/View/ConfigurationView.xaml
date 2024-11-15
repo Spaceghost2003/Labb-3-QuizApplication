@@ -56,9 +56,9 @@
 
         <StackPanel Grid.Column="1" >
             <TextBlock Text="Question:"/>
-            <TextBox Text="{Binding InputQuery, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding InputQuery, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBlock Text="Correct Answer:"/>
-            <TextBox Text="{Binding CorrectAnswer, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding CorrectAnswer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <TextBlock Text="First Incorrect Answer:"/>
             <TextBox Text="{Binding IncorrectAnswer1, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Second Incorrect Answer:"/>
