@@ -14,16 +14,16 @@ namespace QuizApplication_1.Service
     {
         public static void SaveToJson(QuestionPackViewModel questionPackViewModel, string fileName)
         {
-            // Get the path to the Local Application Data folder
+           
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "QuizApplication");
 
-            // Ensure the directory exists
+           
             Directory.CreateDirectory(appDataPath);
 
-            // Create the full file path
+            
             string filePath = Path.Combine(appDataPath, fileName);
 
-            // Create a DTO to store the data in a serializable format
+          
             var dto = new QuestionPackDTO
             {
                 Name = questionPackViewModel.Name,

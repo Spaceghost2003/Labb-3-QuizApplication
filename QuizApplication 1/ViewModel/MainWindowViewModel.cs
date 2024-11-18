@@ -14,16 +14,7 @@ namespace QuizApplication_1.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
 
-     /* _______________________________________________________________________________________
-      |
-      |      TO DO:
-	  |	     Find place to put Loadquestion method
-      |		 Fix check for answer
-      |		 fix JSON
-      |
-      |
-      |                                      
-      |_____________________________________________________________________________________________*/
+    
 
 
         
