@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 
 namespace QuizApplication_1.ViewModel
@@ -20,6 +21,8 @@ namespace QuizApplication_1.ViewModel
     {
         
         private readonly MainWindowViewModel? mainWindowViewModel;
+
+        public PlayerViewModel? playerViewModel;
 
         private Difficulty _selectedDifficulty;
 
@@ -208,8 +211,9 @@ namespace QuizApplication_1.ViewModel
         public void PlayQuiz(object obj)
         {
            mainWindowViewModel.CurrentView = new PlayerView();
-
-
+            
+           
+          
         }
         
         public void SavePack(object obj)
@@ -238,24 +242,24 @@ namespace QuizApplication_1.ViewModel
 
             string filePath = Path.Combine(appDataPath, fileName);
 
-            // Check if the file exists
+            
             if (!File.Exists(filePath))
             {
-                return null; // Or handle the error as needed
+                return null; 
             }
 
-            // Read the JSON content from the file
+          
             string json = File.ReadAllText(filePath);
 
-            // Deserialize the JSON to the QuestionPack object
+            
             var questionPackViewModel = JsonSerializer.Deserialize<QuestionPackViewModel>(json);
 
             if (questionPackViewModel == null)
             {
-                return null; // Or handle deserialization failure
+                return null; 
             }
 
-            // Convert to ViewModel
+           
            
 
             return questionPackViewModel;

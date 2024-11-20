@@ -140,7 +140,7 @@ namespace QuizApplication_1.ViewModel
         public PlayerViewModel(MainWindowViewModel mainWindowViewModel)
         {
 
-
+            
             this.mainWindowViewModel = mainWindowViewModel;
             StartQuizCommand = new RelayCommand(LoadQuestion);
             AnswerCommand = new RelayCommand(CheckAnswer);
@@ -208,11 +208,11 @@ namespace QuizApplication_1.ViewModel
 
         public void LoadQuestion(Object obj)
         {
-            timer.Start();
+            /*timer.Start();*/
            
             if (Indexer >= ActivePack.Questions.Count)
             {
-                timer.Stop();
+               /* timer.Stop();*/
                 return;
             }
 
@@ -235,7 +235,7 @@ namespace QuizApplication_1.ViewModel
             ButtonAnswer4 = shuffledQuestions[3];
 
             InputAnswer = string.Empty;
-
+            Indexer++;
         }
         public void ShuffleObservableCollection<T>(ObservableCollection<T> collection)
         {
@@ -256,7 +256,7 @@ namespace QuizApplication_1.ViewModel
 
         public void CheckAnswer(object answer)
         {
-            string selectedAnswer = answer as string; // 'answer' is passed from the UI
+            string selectedAnswer = answer as string; 
 
             if (selectedAnswer == ActiveQuestion.CorrectAnswer)
             {
@@ -265,9 +265,9 @@ namespace QuizApplication_1.ViewModel
                 Indexer++;
                 return;
             }
-            else
+            else if(selectedAnswer != ActiveQuestion.CorrectAnswer)
             {
-                WrongAnswer = $"That is the wrong answer, the correct answer is{ActiveQuestion.CorrectAnswer}";
+                InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 Indexer++;
                 return;
             }

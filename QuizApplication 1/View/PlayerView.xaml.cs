@@ -1,6 +1,8 @@
-﻿using System;
+﻿using QuizApplication_1.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,8 +22,11 @@ namespace QuizApplication_1.View
     /// </summary>
     public partial class PlayerView : UserControl
     {
+
+           
         public PlayerView()
         {
+
             InitializeComponent();
         }
     }
