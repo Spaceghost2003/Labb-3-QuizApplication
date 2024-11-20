@@ -33,14 +33,13 @@ namespace QuizApplication_1.Service
                 {
                     Query = q.Query,
                     CorrectAnswer = q.CorrectAnswer,
-                    IncorrectAnswers = q.IncorrectAnswers.ToArray() // Convert to array if needed
+                    IncorrectAnswers = q.IncorrectAnswers.ToArray() 
                 }).ToList()
             };
 
-            // Serialize the DTO to JSON
+            
             string json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
 
-            // Write the JSON to the file
             File.WriteAllText(filePath, json);
         }
 
