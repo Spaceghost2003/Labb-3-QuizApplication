@@ -1,4 +1,5 @@
-﻿using QuizApplication_1.Command;
+﻿using Microsoft.Win32;
+using QuizApplication_1.Command;
 using QuizApplication_1.Model;
 using QuizApplication_1.Service;
 using QuizApplication_1.View;
@@ -226,9 +227,23 @@ namespace QuizApplication_1.ViewModel
 
         public void LoadPack(object obj)
         {
-          QuestionPackViewModel loadedPack = new QuestionPackViewModel(new QuestionPack(""));
-          QuestionPackViewModel setter = LoadFromJson("QuestionPack.Json");
-          loadedPack = setter;    
+          OpenFileDialog fileDialog = new OpenFileDialog();
+
+            bool? success = fileDialog.ShowDialog();
+
+            if(success != true)
+            {
+                string path = fileDialog.FileName;
+                QuestionPackViewModel loadedPack = new QuestionPackViewModel(new QuestionPack(""));
+                QuestionPackViewModel setter = LoadFromJson(path);
+                loadedPack = setter;
+                mainWindowViewModel.ActivePack = setter;
+            }
+            else
+            {
+                return;
+            }
+
         }
 
 
