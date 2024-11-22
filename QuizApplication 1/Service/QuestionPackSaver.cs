@@ -12,7 +12,7 @@ namespace QuizApplication_1.Service
 {
     internal class QuestionPackSaver
     {
-        public static void SaveToJson(QuestionPackViewModel questionPackViewModel, string fileName)
+        public static void SaveToJson(QuestionPack questionPack, string fileName)
         {
            
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "QuizApplication");
@@ -23,22 +23,10 @@ namespace QuizApplication_1.Service
             
             string filePath = Path.Combine(appDataPath, fileName);
 
-          
-            var dto = new QuestionPackDTO
-            {
-                Name = questionPackViewModel.Name,
-                Difficulty = questionPackViewModel.Difficulty,
-                TimeLimit = questionPackViewModel.TimeLimit,
-                Questions = questionPackViewModel.Questions.Select(q => new QuestionDTO
-                {
-                    Query = q.Query,
-                    CorrectAnswer = q.CorrectAnswer,
-                    IncorrectAnswers = q.IncorrectAnswers.ToArray() 
-                }).ToList()
-            };
+
 
             
-            string json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
+            string json = JsonSerializer.Serialize(questionPack, new JsonSerializerOptions { WriteIndented = true });
 
             File.WriteAllText(filePath, json);
         }

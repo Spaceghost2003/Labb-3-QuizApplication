@@ -13,5 +13,7 @@ namespace QuizApplication_1.Service
         public Difficulty Difficulty { get; set; }
         public int TimeLimit { get; set; }
         public List<QuestionDTO> Questions { get; set; }
+
+        public QuestionPackDTO() { }    
     }
 }
