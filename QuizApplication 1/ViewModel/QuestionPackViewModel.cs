@@ -51,7 +51,7 @@ namespace QuizApplication_1.ViewModel
             this.Questions= new ObservableCollection<Question>(model.Questions);
 
         }
-        public ObservableCollection<Question> Questions { get; }
+        public ObservableCollection<Question> Questions { get; set; }
 
         public Question GetNextQuestion(int index)
         {

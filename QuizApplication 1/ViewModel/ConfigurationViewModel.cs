@@ -1,10 +1,12 @@
-﻿using QuizApplication_1.Command;
+﻿using Microsoft.Win32;
+using QuizApplication_1.Command;
 using QuizApplication_1.Model;
 using QuizApplication_1.Service;
 using QuizApplication_1.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -181,7 +183,13 @@ namespace QuizApplication_1.ViewModel
 
         public void AddQuestion(object obj)
         {
-            Question question = new Question(InputQuery,CorrectAnswer,IncorrectAnswer1,IncorrectAnswer2,IncorrectAnswer3);
+            Question question = new Question
+                (
+                InputQuery,
+                CorrectAnswer,
+                IncorrectAnswer1,
+                IncorrectAnswer2,
+                IncorrectAnswer3);
             ActivePack.Questions.Add(question);
         }
 
@@ -189,6 +197,7 @@ namespace QuizApplication_1.ViewModel
         {
             if(SelectedQuestion != null)
             {
+
                 ActivePack.Questions.Remove(SelectedQuestion);
             }
         }
@@ -205,6 +214,8 @@ namespace QuizApplication_1.ViewModel
         public void OpenModificationWindow(object obj)
         {
             ModificationView modificationView = new ModificationView();
+
+            modificationView.DataContext = new ConfigurationViewModel(mainWindowViewModel);
             modificationView.ShowDialog();
         }
 
@@ -226,9 +237,40 @@ namespace QuizApplication_1.ViewModel
 
         public void LoadPack(object obj)
         {
-          QuestionPackViewModel loadedPack = new QuestionPackViewModel(new QuestionPack(""));
-          QuestionPackViewModel setter = LoadFromJson("QuestionPack.Json");
-          loadedPack = setter;    
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+            };
+            bool? success = fileDialog.ShowDialog();
+
+            if (success == true)
+            {
+                string path = fileDialog.FileName;
+
+                var jsonContent = File.ReadAllText(path);
+                QuestionPackDTO setter = JsonSerializer.Deserialize<QuestionPackDTO>(jsonContent);
+
+                QuestionPack starter = new QuestionPack(setter.Name)
+                {
+                    Name = setter.Name,
+                    
+                    
+                    Difficulty = setter.Difficulty,
+                    TimeLimit = setter.TimeLimit,
+                    Questions = setter.Questions.Select(q => new Question(
+                        q.Query,
+                        q.CorrectAnswer,
+                        q.IncorrectAnswers[0],
+                        q.IncorrectAnswers[1],
+                        q.IncorrectAnswers[2]
+                    )).ToList()
+
+
+                };
+
+                QuestionPackViewModel loadedPack = new QuestionPackViewModel(starter);
+                mainWindowViewModel.ActivePack = loadedPack;
+            }
         }
 
 

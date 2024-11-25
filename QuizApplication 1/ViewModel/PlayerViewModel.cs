@@ -203,20 +203,26 @@ namespace QuizApplication_1.ViewModel
             }
         }
 
+        private int _questionStep;
 
+        public int QuestionStep
+        {
+            get { return _questionStep; }
+            set { _questionStep = value; }
+        }
 
 
         public void LoadQuestion(Object obj)
         {
-            /*timer.Start();*/
-           
-            if (Indexer >= ActivePack.Questions.Count)
-            {
-               /* timer.Stop();*/
-                return;
-            }
+            timer.Start();
 
-            ActiveQuestion = ActivePack.Questions[Indexer];
+/*            if (Indexer >= ActivePack.Questions.Count)
+            {
+                timer.Stop();
+                return;
+            }*/
+
+            ActiveQuestion = ActivePack.Questions[QuestionStep];
 
             DisplayedQuery = ActiveQuestion.Query;
             CorrectAnswer = ActiveQuestion.CorrectAnswer;
@@ -239,19 +245,17 @@ namespace QuizApplication_1.ViewModel
         }
         public void ShuffleObservableCollection<T>(ObservableCollection<T> collection)
         {
-
             var random = new Random();
             for (int i = collection.Count - 1; i > 0; i--)
             {
                 int j = random.Next(i + 1);
-                (collection[i], collection[j]) = (collection[j], collection[i]); // Swap
+                (collection[i], collection[j]) = (collection[j], collection[i]); 
             }
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
             Indexer++;
-            
         }
 
         public void CheckAnswer(object answer)
@@ -260,19 +264,19 @@ namespace QuizApplication_1.ViewModel
 
             if (selectedAnswer == ActiveQuestion.CorrectAnswer)
             {
+                //add if() if the quiz is over show points and press button to return to configview
                 InputAnswer = $"That is the correct Answer! you get one point!";
                 Points++;
-                Indexer++;
+                QuestionStep++;
                 return;
             }
             else if(selectedAnswer != ActiveQuestion.CorrectAnswer)
             {
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 Indexer++;
+                QuestionStep++;
                 return;
             }
-
-            
         }
 
 
