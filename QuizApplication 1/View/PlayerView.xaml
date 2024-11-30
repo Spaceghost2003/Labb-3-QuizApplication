@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Load next question" /> 
+        <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Start quiz" /> 
             <TextBlock Text="{Binding Indexer}" HorizontalAlignment="Right" FontWeight="Bold" Margin="0 0 10 0"/>
         <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center">
             <TextBlock Text="{Binding DisplayedQuery}" FontSize="25" FontWeight="Bold" Margin="0 0 0 20"/>

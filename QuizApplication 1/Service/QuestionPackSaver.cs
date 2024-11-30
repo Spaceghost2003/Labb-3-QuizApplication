@@ -12,7 +12,7 @@ namespace QuizApplication_1.Service
 {
     internal class QuestionPackSaver
     {
-        public static void SaveToJson(QuestionPackViewModel questionPackViewModel, string fileName)
+        public async static void SaveToJson(QuestionPackViewModel questionPackViewModel, string fileName)
         {
            
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "QuizApplication");
@@ -38,9 +38,9 @@ namespace QuizApplication_1.Service
             };
 
             
-            string json = JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
+            string json =  JsonSerializer.Serialize(dto, new JsonSerializerOptions { WriteIndented = true });
 
-            File.WriteAllText(filePath, json);
+            await File.WriteAllTextAsync(filePath, json);
         }
 
     }

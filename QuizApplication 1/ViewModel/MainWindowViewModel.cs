@@ -13,7 +13,14 @@ namespace QuizApplication_1.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-
+	 /* TODO:
+	  * Ability to save multiple packs
+	  * timer tick for PlayerViewModel typ klart
+	  * keystrokes
+	  * 
+		
+	  
+	  */
     
 
 

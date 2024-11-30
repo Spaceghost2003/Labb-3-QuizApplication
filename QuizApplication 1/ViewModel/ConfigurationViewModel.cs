@@ -3,19 +3,8 @@ using QuizApplication_1.Command;
 using QuizApplication_1.Model;
 using QuizApplication_1.Service;
 using QuizApplication_1.View;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Controls;
 
 namespace QuizApplication_1.ViewModel
 {
@@ -50,6 +39,7 @@ namespace QuizApplication_1.ViewModel
         public RelayCommand OpenModificationWindowCommand { get; }
         public RelayCommand PlayQuizCommand { get; }
         public RelayCommand LoadQuestionCommand { get; }
+        public RelayCommand NewPackCommand { get; }
 
 
         private bool _canLoadQuestions = true;
@@ -139,12 +129,10 @@ namespace QuizApplication_1.ViewModel
 
         
         public ConfigurationViewModel(MainWindowViewModel mainWindowViewModel) 
-        {
-            
-    
-            
-            
+        {   
             this.mainWindowViewModel = mainWindowViewModel;
+
+
             SaveQuestionPackCommand = new RelayCommand(SavePack);
             FillQuestionsCommand = new RelayCommand(FillQuestions,CanFillQuestions);
             AddQuestionCommand = new RelayCommand(AddQuestion);
@@ -152,6 +140,7 @@ namespace QuizApplication_1.ViewModel
             OpenModificationWindowCommand = new RelayCommand(OpenModificationWindow);
             PlayQuizCommand = new RelayCommand(PlayQuiz);
             LoadQuestionCommand = new RelayCommand(LoadPack);
+            NewPackCommand = new RelayCommand(NewPack);
         }
 
         public QuestionPackViewModel? ActivePack {get => mainWindowViewModel.ActivePack;}
@@ -229,17 +218,17 @@ namespace QuizApplication_1.ViewModel
         
         public void SavePack(object obj)
         {
-            string filename = "QuestionPack.Json";
+            string filename = ActivePack.Name;
 
             QuestionPackSaver.SaveToJson(ActivePack, filename);
         }
 
 
-        public void LoadPack(object obj)
+        public async void LoadPack(object obj)
         {
             OpenFileDialog fileDialog = new OpenFileDialog
             {
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                InitialDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"QuizApplication")
             };
             bool? success = fileDialog.ShowDialog();
 
@@ -247,14 +236,14 @@ namespace QuizApplication_1.ViewModel
             {
                 string path = fileDialog.FileName;
 
-                var jsonContent = File.ReadAllText(path);
+                //Await här?
+                var jsonContent = await File.ReadAllTextAsync(path);
                 QuestionPackDTO setter = JsonSerializer.Deserialize<QuestionPackDTO>(jsonContent);
 
+                
                 QuestionPack starter = new QuestionPack(setter.Name)
                 {
                     Name = setter.Name,
-                    
-                    
                     Difficulty = setter.Difficulty,
                     TimeLimit = setter.TimeLimit,
                     Questions = setter.Questions.Select(q => new Question(
@@ -267,7 +256,7 @@ namespace QuizApplication_1.ViewModel
 
 
                 };
-
+                
                 QuestionPackViewModel loadedPack = new QuestionPackViewModel(starter);
                 mainWindowViewModel.ActivePack = loadedPack;
             }
@@ -306,6 +295,11 @@ namespace QuizApplication_1.ViewModel
 
             return questionPackViewModel;
         }
+        public void NewPack(object obj)
+        {
+            mainWindowViewModel.ActivePack.Questions.Clear();
+        }
     }
 }
+
 

@@ -1,6 +1,7 @@
 ﻿using QuizApplication_1.Command;
 using QuizApplication_1.Model;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace QuizApplication_1.ViewModel
         private DispatcherTimer timer;
 
 
-     /*   Question ActiveQuestion = new Question("test", "", "", "", "");*/
+  
 
         private Question _activeQuestion;
 
@@ -142,18 +143,18 @@ namespace QuizApplication_1.ViewModel
 
             
             this.mainWindowViewModel = mainWindowViewModel;
-            StartQuizCommand = new RelayCommand(LoadQuestion);
+            StartQuizCommand = new RelayCommand(StartQuiz);
             AnswerCommand = new RelayCommand(CheckAnswer);
             Random rnd = new Random(); 
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-            
+        
             timer.Tick += Timer_Tick;
 
         }
 
-       /* int indexer = 0;*/
+      
 
         private  int _indexer;
 
@@ -210,18 +211,17 @@ namespace QuizApplication_1.ViewModel
             get { return _questionStep; }
             set { _questionStep = value; }
         }
+        
 
+        private int QuestionTick = 0;
 
-        public void LoadQuestion(Object obj)
+        public void StartQuiz(object obj)
         {
+            QuestionTick = 0;
             timer.Start();
-
-/*            if (Indexer >= ActivePack.Questions.Count)
-            {
-                timer.Stop();
-                return;
-            }*/
-
+        }
+        public void LoadQuestion()
+        {
             ActiveQuestion = ActivePack.Questions[QuestionStep];
 
             DisplayedQuery = ActiveQuestion.Query;
@@ -256,7 +256,19 @@ namespace QuizApplication_1.ViewModel
         private void Timer_Tick(object? sender, EventArgs e)
         {
             Indexer++;
+            QuestionTick++;
+            //questionpack.Timelimit / Questions.Count
+            if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count)
+            {
+                QuestionTick = 0;
+                QuestionStep++;
+            }if(QuestionTick == 0)
+            {
+                LoadQuestion();
+            }
         }
+
+
 
         public void CheckAnswer(object answer)
         {
@@ -267,20 +279,19 @@ namespace QuizApplication_1.ViewModel
                 //add if() if the quiz is over show points and press button to return to configview
                 InputAnswer = $"That is the correct Answer! you get one point!";
                 Points++;
-                QuestionStep++;
+                Thread.Sleep(3000);
                 return;
+            }else if(selectedAnswer==string.Empty && QuestionTick == 10)
+            {
+                InputAnswer = "No answer selected!";
+                
             }
             else if(selectedAnswer != ActiveQuestion.CorrectAnswer)
             {
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 Indexer++;
-                QuestionStep++;
                 return;
             }
         }
-
-
-
-
     }
 }

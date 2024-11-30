@@ -18,11 +18,12 @@
             <StackPanel Orientation="Vertical" Height="Auto">
                 <TextBlock Text="{Binding ActivePack.Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  >
-                    <Button
+                   
+                    <!--<Button
                         Content="Load default Questions"
                         HorizontalAlignment="Right"
                         Command="{Binding FillQuestionsCommand}"
-                            />
+                            />-->
 
                     <Button  HorizontalAlignment="Right" Content="Modify"
                              Command="{Binding OpenModificationWindowCommand}"/>
@@ -56,15 +57,15 @@
 
         <StackPanel Grid.Column="1" >
             <TextBlock Text="Question:"/>
-            <TextBox Text="{Binding InputQuery, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <TextBox Text="{Binding SelectedQuestion.Query, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             <TextBlock Text="Correct Answer:"/>
-            <TextBox Text="{Binding CorrectAnswer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            <TextBox Text="{Binding SelectedQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <TextBlock Text="First Incorrect Answer:"/>
-            <TextBox Text="{Binding IncorrectAnswer1, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Second Incorrect Answer:"/>
-            <TextBox Text="{Binding IncorrectAnswer2, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Third Incorrect Answer:"/>
-            <TextBox Text="{Binding IncorrectAnswer3, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}"/>
 
         </StackPanel>
 
