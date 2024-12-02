@@ -11,7 +11,12 @@
     <Grid>
         <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Start quiz" /> 
             <TextBlock Text="{Binding Indexer}" HorizontalAlignment="Right" FontWeight="Bold" Margin="0 0 10 0"/>
+        <StackPanel HorizontalAlignment="center" VerticalAlignment="top" Orientation="Horizontal">
+            <TextBlock Text="Points:" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 10 0"/>
+        <TextBlock Text="{Binding Points}" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 10 0"/>
+        </StackPanel>
         <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center">
+            <TextBlock Text="{Binding QuizResult}" FontSize="25" FontWeight="Bold" Margin=" 0 0 0 20"/>
             <TextBlock Text="{Binding DisplayedQuery}" FontSize="25" FontWeight="Bold" Margin="0 0 0 20"/>
             <TextBlock Text="{Binding InputAnswer}" FontSize="25" Margin="0 40 0 0"/>
             <Grid>

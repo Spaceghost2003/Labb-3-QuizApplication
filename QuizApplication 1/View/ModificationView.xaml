@@ -27,7 +27,12 @@
         </StackPanel>
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" >
             <TextBlock Text="Time Limit:" FontSize="16" FontWeight="Bold"/>
-            <Slider Minimum="1" Maximum="120" TickFrequency="5"/>
+            <TextBox Text="{Binding ActivePack.TimeLimit}"/>
+            <Slider Minimum="{Binding ActivePack.Questions.Count}" Maximum="120" TickFrequency="5"
+                    
+                    Value="{Binding ActivePack.TimeLimit}" 
+                    IsSnapToTickEnabled="true"
+                    Name="Slide"/>
         </StackPanel>
 
     </Grid>
