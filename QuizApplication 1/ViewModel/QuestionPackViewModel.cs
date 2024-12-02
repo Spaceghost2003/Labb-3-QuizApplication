@@ -12,7 +12,7 @@ namespace QuizApplication_1.ViewModel
 {
     internal class QuestionPackViewModel : ViewModelBase
     {
-        private readonly QuestionPack model;
+        public QuestionPack model;
 
         
 
