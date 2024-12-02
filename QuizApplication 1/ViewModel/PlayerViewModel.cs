@@ -258,11 +258,18 @@ namespace QuizApplication_1.ViewModel
             Indexer++;
             QuestionTick++;
             //questionpack.Timelimit / Questions.Count
-            if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count)
+            if (QuestionStep == ActivePack.Questions.Count)
+            {
+                InputAnswer = $"Quiz finished, you get {Points} points";
+              
+               /* mainWindowViewModel.CurrentView = ;*/
+            }
+            else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count)
             {
                 QuestionTick = 0;
                 QuestionStep++;
-            }if(QuestionTick == 0)
+            }
+            else if(QuestionTick == 0)
             {
                 LoadQuestion();
             }
@@ -272,7 +279,7 @@ namespace QuizApplication_1.ViewModel
 
         public void CheckAnswer(object answer)
         {
-            string selectedAnswer = answer as string; 
+            string selectedAnswer = answer as string;
 
             if (selectedAnswer == ActiveQuestion.CorrectAnswer)
             {
