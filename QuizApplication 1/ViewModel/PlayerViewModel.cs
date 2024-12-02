@@ -281,7 +281,7 @@ namespace QuizApplication_1.ViewModel
                 Points++;
                 Thread.Sleep(3000);
                 return;
-            }else if(selectedAnswer==string.Empty && QuestionTick == 10)
+            }else if(selectedAnswer==string.Empty && QuestionTick == 5)
             {
                 InputAnswer = "No answer selected!";
                 
@@ -291,6 +291,10 @@ namespace QuizApplication_1.ViewModel
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 Indexer++;
                 return;
+            }
+            else if(QuestionStep >= ActivePack.Questions.Count)
+            {
+                InputAnswer = $"Quiz over, you get {Points} points";
             }
         }
     }
