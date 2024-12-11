@@ -9,8 +9,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Start quiz" /> 
-            <TextBlock Text="{Binding Indexer}" HorizontalAlignment="Right" FontWeight="Bold" Margin="0 0 10 0"/>
+        <Button Command="{Binding StartQuizCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Start quiz" Margin=" 0 0 5 0"/>
+        <Button Command="{Binding ShowConfigCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Content="return to configuation" Margin="70 0 0 0  "/>
+        <TextBlock Text="{Binding Indexer}" HorizontalAlignment="Right" FontWeight="Bold" Margin="0 0 10 0"/>
         <StackPanel HorizontalAlignment="center" VerticalAlignment="top" Orientation="Horizontal">
             <TextBlock Text="Points:" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 10 0"/>
         <TextBlock Text="{Binding Points}" HorizontalAlignment="Center" FontWeight="Bold" Margin="0 0 10 0"/>
@@ -31,16 +32,20 @@
                 <!--<Button --><!--Content="{Binding testData, UpdateSourceTrigger=PropertyChanged--><!--}"-->
                 <Button  Grid.Column="0" Grid.Row="0" Content="{Binding ButtonAnswer1, UpdateSourceTrigger=PropertyChanged}"
                          Command="{Binding AnswerCommand}"
-                         CommandParameter="{Binding ButtonAnswer1}"/>
+                         CommandParameter="{Binding ButtonAnswer1}"
+                         IsEnabled="{Binding AreButtonsEnabled}"/>
                 <Button  Grid.Column="1" Grid.Row="0" Content="{Binding ButtonAnswer2, UpdateSourceTrigger=PropertyChanged}" 
                          Command="{Binding AnswerCommand}"
-                         CommandParameter="{Binding ButtonAnswer2}"/>
+                         CommandParameter="{Binding ButtonAnswer2}"
+                         IsEnabled="{Binding AreButtonsEnabled}"/>
                 <Button Grid.Column="0" Grid.Row="1" Content="{Binding ButtonAnswer3, UpdateSourceTrigger=PropertyChanged}"
                         Command="{Binding AnswerCommand}"
-                        CommandParameter="{Binding ButtonAnswer3}"/>
+                        CommandParameter="{Binding ButtonAnswer3}"
+                        IsEnabled="{Binding AreButtonsEnabled}"/>
                 <Button  Grid.Column="1" Grid.Row="1" Content="{Binding ButtonAnswer4, UpdateSourceTrigger=PropertyChanged}" 
                          Command="{Binding AnswerCommand}"
-                         CommandParameter="{Binding ButtonAnswer4}" />
+                         CommandParameter="{Binding ButtonAnswer4}"
+                         IsEnabled="{Binding AreButtonsEnabled}"/>
 
 
             </Grid>

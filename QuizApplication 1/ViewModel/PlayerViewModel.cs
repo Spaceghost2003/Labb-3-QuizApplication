@@ -19,6 +19,17 @@ namespace QuizApplication_1.ViewModel
        
         public QuestionPackViewModel? ActivePack { get => mainWindowViewModel.ActivePack; }
 
+        private bool _areButtonsEnabled = true;
+        public bool AreButtonsEnabled
+        {
+            get { return _areButtonsEnabled; }
+            set
+            {
+                _areButtonsEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         private DispatcherTimer timer;
 
 
@@ -38,6 +49,8 @@ namespace QuizApplication_1.ViewModel
 
         public RelayCommand AnswerCommand { get; }
         public RelayCommand StartQuizCommand { get; }
+
+        public RelayCommand ShowConfigCommand { get; }  
 
         private string _displayedQuery;
         public string DisplayedQuery
@@ -146,8 +159,8 @@ namespace QuizApplication_1.ViewModel
             this.mainWindowViewModel = mainWindowViewModel;
             StartQuizCommand = new RelayCommand(StartQuiz);
             AnswerCommand = new RelayCommand(CheckAnswer);
+            ShowConfigCommand = new RelayCommand(ShowConfig);
             Random rnd = new Random(); 
-
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
         
@@ -227,6 +240,11 @@ namespace QuizApplication_1.ViewModel
 
         private int QuestionTick = 0;
 
+        public void ShowConfig(object obj)
+        {
+            mainWindowViewModel.CurrentView = new ConfigurationView();
+            timer.Stop();
+        }
         public void StartQuiz(object obj)
         {
             QuestionTick = 0;
@@ -234,6 +252,7 @@ namespace QuizApplication_1.ViewModel
         }
         public void LoadQuestion()
         {
+            AreButtonsEnabled = true;
 
             if (QuestionStep == ActivePack.Questions.Count)
             {
@@ -269,6 +288,7 @@ namespace QuizApplication_1.ViewModel
             var random = new Random();
             for (int i = collection.Count - 1; i > 0; i--)
             {
+        
                 int j = random.Next(i + 1);
                 (collection[i], collection[j]) = (collection[j], collection[i]); 
             }
@@ -303,6 +323,8 @@ namespace QuizApplication_1.ViewModel
         public void CheckAnswer(object answer)
         {
             string selectedAnswer = answer as string; 
+
+            AreButtonsEnabled = false;
 
             if (selectedAnswer == ActiveQuestion.CorrectAnswer)
             {
