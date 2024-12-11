@@ -19,6 +19,8 @@
                 <MenuItem Header="Load Question Pack"
                           Command="{Binding LoadQuestionCommand}"/>
 
+                
+
                 <Separator />
 
                 <MenuItem Header="E_xit" />
@@ -42,7 +44,8 @@
                     
                     Command="{Binding PlayQuizCommand}"
                           />
-                <MenuItem Header="_Fullscreen"/>
+                <MenuItem Header="_Fullscreen"
+                          Command="{Binding ToggleFullscreenCommand}" />
 
             </MenuItem>
         </Menu>

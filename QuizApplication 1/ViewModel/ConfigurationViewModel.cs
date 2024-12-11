@@ -5,6 +5,7 @@ using QuizApplication_1.Service;
 using QuizApplication_1.View;
 using System.IO;
 using System.Text.Json;
+using System.Windows;
 
 namespace QuizApplication_1.ViewModel
 {
@@ -41,6 +42,7 @@ namespace QuizApplication_1.ViewModel
         public RelayCommand LoadQuestionCommand { get; }
         public RelayCommand NewPackCommand { get; }
 
+        public RelayCommand ToggleFullscreenCommand { get; }    
 
         private bool _canLoadQuestions = true;
 
@@ -133,6 +135,7 @@ namespace QuizApplication_1.ViewModel
             this.mainWindowViewModel = mainWindowViewModel;
 
 
+
             SaveQuestionPackCommand = new RelayCommand(SavePack);
             FillQuestionsCommand = new RelayCommand(FillQuestions,CanFillQuestions);
             AddQuestionCommand = new RelayCommand(AddQuestion);
@@ -141,6 +144,7 @@ namespace QuizApplication_1.ViewModel
             PlayQuizCommand = new RelayCommand(PlayQuiz);
             LoadQuestionCommand = new RelayCommand(LoadPack);
             NewPackCommand = new RelayCommand(NewPack);
+            ToggleFullscreenCommand = new RelayCommand(ToggleFullscreen);
         }
 
         public QuestionPackViewModel? ActivePack {get => mainWindowViewModel.ActivePack;}
@@ -236,7 +240,7 @@ namespace QuizApplication_1.ViewModel
             {
                 string path = fileDialog.FileName;
 
-                //Await här?
+      
                 var jsonContent = await File.ReadAllTextAsync(path);
                 QuestionPackDTO setter = JsonSerializer.Deserialize<QuestionPackDTO>(jsonContent);
 
@@ -262,6 +266,20 @@ namespace QuizApplication_1.ViewModel
             }
         }
 
+        private void ToggleFullscreen(object obj)
+        {
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow.WindowState == WindowState.Maximized && mainWindow.WindowStyle == WindowStyle.None)
+            { 
+                mainWindow.WindowState = WindowState.Normal;
+                mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                mainWindow.WindowStyle = WindowStyle.None;
+                mainWindow.WindowState = WindowState.Maximized;
+            }
+        }
 
         public static QuestionPackViewModel LoadFromJson(string fileName)
         {

@@ -13,19 +13,6 @@ namespace QuizApplication_1.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-	 /* TODO:
-	  * Ability to save multiple packs
-	  * timer tick for PlayerViewModel typ klart
-	  * keystrokes
-	  * 
-		
-	  
-	  */
-    
-
-
-        
-
         public ObservableCollection<QuestionPackViewModel> Packs { get; set; }
 
 		public PlayerViewModel PlayerViewModel {get;}

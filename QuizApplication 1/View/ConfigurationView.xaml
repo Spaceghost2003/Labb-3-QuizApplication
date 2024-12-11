@@ -10,65 +10,72 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-
-        <StackPanel Grid.Column="0">
-            <StackPanel Orientation="Vertical" Height="Auto">
-                <TextBlock Text="{Binding ActivePack.Name, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"/>
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"  >
-                   
-                    <!--<Button
-                        Content="Load default Questions"
-                        HorizontalAlignment="Right"
-                        Command="{Binding FillQuestionsCommand}"
-                            />-->
-
-                    <Button  HorizontalAlignment="Right" Content="Modify"
-                             Command="{Binding OpenModificationWindowCommand}"/>
-                    <Button HorizontalAlignment="Right"
-                            Content="Add"
-                            Command="{Binding AddQuestionCommand}"/>
-                    <Button HorizontalAlignment="right" 
-                            
-                        Content="Remove"
-                        Command="{Binding RemoveQuestionCommand}"   
-                            />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Margin="0 0 0 10" Grid.Row="0">
+                <TextBlock Text="{Binding ActivePack.Name, UpdateSourceTrigger=PropertyChanged}" 
+                           FontWeight="Bold" FontSize="18"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
+                    <Button Content="Modify" Command="{Binding OpenModificationWindowCommand}" Margin="5"/>
+                    <Button Content="Add" Command="{Binding AddQuestionCommand}" Margin="5"/>
+                    <Button Content="Remove" Command="{Binding RemoveQuestionCommand}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
-
-            <ListView Height="411" 
-                          ScrollViewer.CanContentScroll="True" 
-                          ItemsSource="{Binding ActivePack.Questions}"
-                          SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}">
+            <ListView 
+                Grid.Row="1"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ItemsSource="{Binding ActivePack.Questions}"
+                SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}">
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListView">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ScrollViewer>
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Style>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <StackPanel Margin="5">
                             <TextBlock Text="Question:" FontWeight="Bold"/>
                             <TextBlock Text="{Binding Query}" TextWrapping="Wrap" Margin="10 0 0 10"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
-
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" >
-            <TextBlock Text="Question:"/>
-            <TextBox Text="{Binding SelectedQuestion.Query, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-            <TextBlock Text="Correct Answer:"/>
-            <TextBox Text="{Binding SelectedQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            <TextBlock Text="First Incorrect Answer:"/>
-            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="Second Incorrect Answer:"/>
-            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="Third Incorrect Answer:"/>
-            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}"/>
-
-        </StackPanel>
-
-
+        </Grid>
+        <Grid Grid.Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="0" VerticalAlignment="Stretch">
+                <TextBlock Text="Question:" FontWeight="Bold" Margin="0 0 0 5"/>
+                <TextBox Text="{Binding SelectedQuestion.Query, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 0 10"/>
+                <TextBlock Text="Correct Answer:" FontWeight="Bold" Margin="0 0 0 5"/>
+                <TextBox Text="{Binding SelectedQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="0 0 0 10"/>
+                <TextBlock Text="First Incorrect Answer:" FontWeight="Bold" Margin="0 0 0 5"/>
+                <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 10"/>
+                <TextBlock Text="Second Incorrect Answer:" FontWeight="Bold" Margin="0 0 0 5"/>
+                <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 10"/>
+                <TextBlock Text="Third Incorrect Answer:" FontWeight="Bold" Margin="0 0 0 5"/>
+                <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 10"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
