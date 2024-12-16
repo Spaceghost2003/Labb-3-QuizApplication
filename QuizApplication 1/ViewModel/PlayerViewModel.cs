@@ -256,7 +256,8 @@ namespace QuizApplication_1.ViewModel
         }
         public void StartQuiz(object obj)
         {
-            Indexer = ActivePack.TimeLimit; 
+            Indexer = ActivePack.TimeLimit;
+            QuestionStep = 0;
             QuestionTick = 0;
             timer.Start();
         }
@@ -268,7 +269,6 @@ namespace QuizApplication_1.ViewModel
             {
                 timer.Stop();
                 QuestionStep = 0;
-                QuestionTick = 0;
                 QuestionTick = 0;
                 var Qfinish = new QuizFinishedView();
                 Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
@@ -325,7 +325,7 @@ namespace QuizApplication_1.ViewModel
             {
                 LoadQuestion();
             }
-             else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep <= ActivePack.Questions.Count)
+             else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep != ActivePack.Questions.Count-1)
             {
                 QuestionTick = 0;
                 QuestionStep++;
@@ -349,8 +349,8 @@ namespace QuizApplication_1.ViewModel
                 timer.Stop();
                 await Task.Delay(3000);
                 Points++;
-                LoadQuestion();
                 timer.Start();
+                LoadQuestion();
             }else if(selectedAnswer==string.Empty && QuestionTick == 5)
             {
                 InputAnswer = "No answer selected!";
@@ -363,10 +363,10 @@ namespace QuizApplication_1.ViewModel
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 QuestionStep++;
                 timer.Stop();
-                await Task.Delay(2000);
-                LoadQuestion();
+                await Task.Delay(3000);
                 timer.Start();
-                return;
+                LoadQuestion();
+                
             }
         }
     }
