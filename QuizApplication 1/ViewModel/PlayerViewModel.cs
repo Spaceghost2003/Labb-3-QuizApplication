@@ -252,6 +252,7 @@ namespace QuizApplication_1.ViewModel
         }
         public void StartQuiz(object obj)
         {
+            Indexer = ActivePack.TimeLimit; 
             QuestionTick = 0;
             timer.Start();
         }
@@ -262,7 +263,9 @@ namespace QuizApplication_1.ViewModel
             if (QuestionStep == ActivePack.Questions.Count)
             {
                 timer.Stop();
-
+                QuestionStep = 0;
+                QuestionTick = 0;
+                Points = 0;
                 var Qfinish = new QuizFinishedView();
                 Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
                 QuizFinished = $"Quiz over, you get {Points} points";
@@ -302,7 +305,7 @@ namespace QuizApplication_1.ViewModel
         }
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            Indexer++;
+            Indexer--;
             QuestionTick++;
             //questionpack.Timelimit / Questions.Count
 /*            if (QuestionStep == ActivePack.Questions.Count)
@@ -334,7 +337,7 @@ namespace QuizApplication_1.ViewModel
                 
                 InputAnswer = $"That is the correct Answer! you get one point!";
                 QuestionStep++;
-                Indexer++;
+               
                 await Task.Delay(3000);
                 LoadQuestion();
                 Points++;
@@ -350,8 +353,8 @@ namespace QuizApplication_1.ViewModel
             {
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 QuestionStep++;
-                Indexer++;
-                Task.Delay(2000);
+                
+                await Task.Delay(2000);
                 LoadQuestion();
                 return;
             }
