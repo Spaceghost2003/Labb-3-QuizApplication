@@ -269,6 +269,7 @@ namespace QuizApplication_1.ViewModel
                 timer.Stop();
                 QuestionStep = 0;
                 QuestionTick = 0;
+                QuestionTick = 0;
                 var Qfinish = new QuizFinishedView();
                 Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
                 QuizFinished = $"Time up! you get {Points} points";
@@ -295,7 +296,7 @@ namespace QuizApplication_1.ViewModel
             ButtonAnswer4 = shuffledQuestions[3];
 
             InputAnswer = string.Empty;
-            Indexer++;
+            
         }
         public void ShuffleObservableCollection<T>(ObservableCollection<T> collection)
         {
@@ -324,7 +325,7 @@ namespace QuizApplication_1.ViewModel
             {
                 LoadQuestion();
             }
-             else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep != ActivePack.Questions.Count-1)
+             else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep <= ActivePack.Questions.Count)
             {
                 QuestionTick = 0;
                 QuestionStep++;
@@ -345,12 +346,11 @@ namespace QuizApplication_1.ViewModel
                 
                 InputAnswer = $"That is the correct Answer! you get one point!";
                 QuestionStep++;
-               
+                timer.Stop();
                 await Task.Delay(3000);
-                
                 Points++;
-                
                 LoadQuestion();
+                timer.Start();
             }else if(selectedAnswer==string.Empty && QuestionTick == 5)
             {
                 InputAnswer = "No answer selected!";
@@ -362,9 +362,10 @@ namespace QuizApplication_1.ViewModel
             {
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
                 QuestionStep++;
-                
+                timer.Stop();
                 await Task.Delay(2000);
                 LoadQuestion();
+                timer.Start();
                 return;
             }
         }
