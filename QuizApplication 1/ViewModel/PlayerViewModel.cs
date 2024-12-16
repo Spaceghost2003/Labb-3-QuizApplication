@@ -39,8 +39,6 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
-
-
         private DispatcherTimer timer;
 
         private bool _isButtonVisible;
@@ -54,9 +52,6 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
-
-
-
         private Question _activeQuestion;
 
         public Question ActiveQuestion
@@ -68,10 +63,8 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
-
         public RelayCommand AnswerCommand { get; }
         public RelayCommand StartQuizCommand { get; }
-
         public RelayCommand ShowConfigCommand { get; }  
 
         private string _displayedQuery;
@@ -139,7 +132,6 @@ namespace QuizApplication_1.ViewModel
             }
         }
 
-        
         private string buttonAnswer2;
         public string ButtonAnswer2
         {
@@ -176,8 +168,6 @@ namespace QuizApplication_1.ViewModel
 
         public PlayerViewModel(MainWindowViewModel mainWindowViewModel)
         {
-
-            
             this.mainWindowViewModel = mainWindowViewModel;
             StartQuizCommand = new RelayCommand(StartQuiz);
             AnswerCommand = new RelayCommand(CheckAnswer);
@@ -185,13 +175,9 @@ namespace QuizApplication_1.ViewModel
             Random rnd = new Random(); 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-        
             timer.Tick += Timer_Tick;
 
         }
-
-      
-
         private  int _indexer;
 
         public  int Indexer
@@ -250,7 +236,6 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
-
         private string _quizResult;
 
         public string QuizResult
@@ -258,8 +243,6 @@ namespace QuizApplication_1.ViewModel
             get { return _quizResult; }
             set { _quizResult = value; }
         }
-
-
         private int QuestionTick = 0;
 
         public void ShowConfig(object obj)
@@ -284,13 +267,8 @@ namespace QuizApplication_1.ViewModel
                 Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
                 QuizFinished = $"Quiz over, you get {Points} points";
                 mainWindowViewModel.CurrentView = Qfinish;
-
-
-
-                
-                
-                
-            }else
+            }
+            else
             ActiveQuestion = ActivePack.Questions[QuestionStep];
 
             DisplayedQuery = ActiveQuestion.Query;
@@ -322,7 +300,6 @@ namespace QuizApplication_1.ViewModel
                 (collection[i], collection[j]) = (collection[j], collection[i]); 
             }
         }
-
         private void Timer_Tick(object? sender, EventArgs e)
         {
             Indexer++;
@@ -346,9 +323,6 @@ namespace QuizApplication_1.ViewModel
                 LoadQuestion();
             }
         }
-
-
-
         public async void CheckAnswer(object answer)
         {
             string selectedAnswer = answer as string; 
@@ -381,7 +355,6 @@ namespace QuizApplication_1.ViewModel
                 LoadQuestion();
                 return;
             }
-
         }
     }
 }

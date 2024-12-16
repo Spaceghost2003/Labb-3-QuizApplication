@@ -9,8 +9,15 @@
         DataContext="{Binding MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.InputBindings>
-        <KeyBinding Key="u" Modifiers="Ctrl"/>
+    <Window.InputBindings  >
+        <KeyBinding  Key="n" Modifiers="Ctrl" Command="{Binding ConfigurationViewModel.NewPackCommand}"/>
+        <KeyBinding Key="s" Modifiers="Ctrl" Command="{Binding ConfigurationViewModel.SaveQuestionPackCommand}"/>
+        <KeyBinding Key="l" Modifiers="Ctrl" Command="{Binding ConfigurationViewModel.LoadQuestionCommand}"/>
+        <KeyBinding Key="q" Modifiers="Ctrl" Command="{Binding ConfigurationViewModel.AddQuestionCommand}"/>
+        <KeyBinding Key="Delete" Command="{Binding ConfigurationViewModel.RemoveQuestionCommand}"/>
+        <KeyBinding Key="O" Modifiers="Alt" Command="{Binding ConfigurationViewModel.OpenModificationWindowCommand}"/>
+        <KeyBinding Key="p" Modifiers="Ctrl" Command="{Binding ConfigurationViewModel.PlayQuizCommand}"/>
+        <KeyBinding Key="f" Modifiers="Alt" Command="{Binding ConfigurationViewModel.ToggleFullscreenCommand}"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

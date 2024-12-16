@@ -7,44 +7,54 @@
              DataContext="{Binding ConfigurationViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
+        
         <Menu>
             <MenuItem Header="_File" >
 
                 <MenuItem Header="_New Question Pack" 
+                          InputGestureText="Ctrl+N"
                          Command="{Binding NewPackCommand}"/>
                 <MenuItem Header="_Save Question Pack"
+                          InputGestureText="Ctrl+S"
                           Command="{Binding SaveQuestionPackCommand}"/>
 
                 <MenuItem Header="Load Question Pack"
+                          InputGestureText="Ctrl+L"
                           Command="{Binding LoadQuestionCommand}"/>
 
                 
 
                 <Separator />
 
-                <MenuItem Header="E_xit" />
+                <MenuItem Header="E_xit"
+                          InputGestureText="Esc"/>
 
             </MenuItem>
 
             <MenuItem Header="_Edit">
 
                 <MenuItem Header="_Add Question"
-                          />
+                          InputGestureText="Ctrl+Q"
+                          Command="{Binding AddQuestionCommand}"/>
                 <MenuItem Header="_Remove question" 
-                          />
+                         InputGestureText="Del"
+                          Command="{Binding RemoveQuestionCommand}"/>
                 <MenuItem Header="_Pack Options"
-                          />
+                         InputGestureText="Alt+O"
+                          Command="{Binding OpenModificationWindowCommand}"/>
 
             </MenuItem>
 
             <MenuItem Header="_View">
                 <MenuItem 
                     Header="_Play"
-                    
+                    InputGestureText="Ctrl+P"
                     Command="{Binding PlayQuizCommand}"
                           />
                 <MenuItem Header="_Fullscreen"
+                          InputGestureText="Alt+F"
                           Command="{Binding ToggleFullscreenCommand}"
                           />
 
