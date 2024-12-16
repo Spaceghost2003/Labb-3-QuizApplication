@@ -247,6 +247,10 @@ namespace QuizApplication_1.ViewModel
 
         public void ShowConfig(object obj)
         {
+            timer.Stop();
+            QuestionStep = 0;
+            QuestionTick = 0;
+            Points = 0;
             mainWindowViewModel.CurrentView = new ConfigurationView();
             timer.Stop();
         }
@@ -260,14 +264,14 @@ namespace QuizApplication_1.ViewModel
         {
             AreButtonsEnabled = true;
 
-            if (QuestionStep == ActivePack.Questions.Count)
+            if (QuestionStep == ActivePack.Questions.Count || Indexer==0)
             {
                 timer.Stop();
                 QuestionStep = 0;
                 QuestionTick = 0;
                 var Qfinish = new QuizFinishedView();
                 Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
-                QuizFinished = $"Quiz over, you get {Points} points";
+                QuizFinished = $"Time up! you get {Points} points";
                 Points = 0;
                 mainWindowViewModel.CurrentView = Qfinish;
             }
@@ -316,12 +320,16 @@ namespace QuizApplication_1.ViewModel
                 timer.Stop();
                 
             }*/
-             if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep != ActivePack.Questions.Count)
+             if(QuestionTick == 1)
+            {
+                LoadQuestion();
+            }
+             else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep != ActivePack.Questions.Count-1)
             {
                 QuestionTick = 0;
                 QuestionStep++;
             }
-            else if(QuestionTick == 1)
+            else if(Indexer == 0)
             {
                 LoadQuestion();
             }
