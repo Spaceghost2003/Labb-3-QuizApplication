@@ -265,10 +265,10 @@ namespace QuizApplication_1.ViewModel
                 timer.Stop();
                 QuestionStep = 0;
                 QuestionTick = 0;
-                Points = 0;
                 var Qfinish = new QuizFinishedView();
                 Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
                 QuizFinished = $"Quiz over, you get {Points} points";
+                Points = 0;
                 mainWindowViewModel.CurrentView = Qfinish;
             }
             else
@@ -339,13 +339,14 @@ namespace QuizApplication_1.ViewModel
                 QuestionStep++;
                
                 await Task.Delay(3000);
-                LoadQuestion();
+                
                 Points++;
                 
                 LoadQuestion();
             }else if(selectedAnswer==string.Empty && QuestionTick == 5)
             {
                 InputAnswer = "No answer selected!";
+                QuestionStep++;
                 return;
                 
             }
