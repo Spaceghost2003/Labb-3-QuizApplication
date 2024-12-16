@@ -45,7 +45,8 @@
                     Command="{Binding PlayQuizCommand}"
                           />
                 <MenuItem Header="_Fullscreen"
-                          Command="{Binding ToggleFullscreenCommand}" />
+                          Command="{Binding ToggleFullscreenCommand}"
+                          />
 
             </MenuItem>
         </Menu>

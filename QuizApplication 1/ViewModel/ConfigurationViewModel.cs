@@ -190,7 +190,6 @@ namespace QuizApplication_1.ViewModel
         {
             if(SelectedQuestion != null)
             {
-
                 ActivePack.Questions.Remove(SelectedQuestion);
             }
         }
@@ -215,6 +214,8 @@ namespace QuizApplication_1.ViewModel
         public void PlayQuiz(object obj)
         {
            mainWindowViewModel.CurrentView = new PlayerView();
+
+            mainWindowViewModel.PlayerViewModel.StartQuiz(obj);
             
            
           

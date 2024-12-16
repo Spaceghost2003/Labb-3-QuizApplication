@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
-            <Button Command="{Binding StartQuizCommand}" Content="Start Quiz" Margin="5"/>
+            <!--<Button Command="{Binding StartQuizCommand}" Content="Start Quiz" Margin="5"/>-->
             <Button Command="{Binding ShowConfigCommand}" Content="Return to Configuration" Margin="5"/>
             <TextBlock Text="{Binding Indexer}" HorizontalAlignment="Right" FontWeight="Bold" Margin="10 0 0 0"/>
         </StackPanel>
@@ -35,7 +35,8 @@
                 <Button Grid.Column="0" Grid.Row="0" Content="{Binding ButtonAnswer1, UpdateSourceTrigger=PropertyChanged}"
                         Command="{Binding AnswerCommand}"
                         CommandParameter="{Binding ButtonAnswer1}"
-                        IsEnabled="{Binding AreButtonsEnabled}" Margin="5" Padding="10"/>
+                        IsEnabled="{Binding AreButtonsEnabled}" Margin="5" Padding="10"
+                        />
                 <Button Grid.Column="1" Grid.Row="0" Content="{Binding ButtonAnswer2, UpdateSourceTrigger=PropertyChanged}" 
                         Command="{Binding AnswerCommand}"
                         CommandParameter="{Binding ButtonAnswer2}"

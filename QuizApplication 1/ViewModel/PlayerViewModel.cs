@@ -29,11 +29,33 @@ namespace QuizApplication_1.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string _quizFInished;
+
+        public  string QuizFinished
+        {
+            get { return _quizFInished; }
+            set { 
+                _quizFInished = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private DispatcherTimer timer;
 
+        private bool _isButtonVisible;
 
-  
+        public bool IsButtonVisible
+        {
+            get { return _isButtonVisible; }
+            set 
+            { 
+                _isButtonVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         private Question _activeQuestion;
 
@@ -256,10 +278,17 @@ namespace QuizApplication_1.ViewModel
 
             if (QuestionStep == ActivePack.Questions.Count)
             {
-                InputAnswer = $"Quiz over, you get {Points} points";
-                Thread.Sleep(4000);
-                mainWindowViewModel.CurrentView = new ConfigurationView();
                 timer.Stop();
+
+                var Qfinish = new QuizFinishedView();
+                Qfinish.DataContext = mainWindowViewModel.PlayerViewModel;
+                QuizFinished = $"Quiz over, you get {Points} points";
+                mainWindowViewModel.CurrentView = Qfinish;
+
+
+
+                
+                
                 
             }else
             ActiveQuestion = ActivePack.Questions[QuestionStep];
@@ -299,20 +328,20 @@ namespace QuizApplication_1.ViewModel
             Indexer++;
             QuestionTick++;
             //questionpack.Timelimit / Questions.Count
-            if (QuestionStep == ActivePack.Questions.Count)
+/*            if (QuestionStep == ActivePack.Questions.Count)
             {
                 InputAnswer = $"Quiz over, you get {Points} points";
                 Thread.Sleep(4000);
                 mainWindowViewModel.CurrentView = new ConfigurationView();
                 timer.Stop();
                 
-            }
-            else if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count)
+            }*/
+             if (QuestionTick == ActivePack.TimeLimit/ActivePack.Questions.Count && QuestionStep != ActivePack.Questions.Count)
             {
                 QuestionTick = 0;
                 QuestionStep++;
             }
-            if(QuestionTick == 1)
+            else if(QuestionTick == 1)
             {
                 LoadQuestion();
             }
@@ -320,7 +349,7 @@ namespace QuizApplication_1.ViewModel
 
 
 
-        public void CheckAnswer(object answer)
+        public async void CheckAnswer(object answer)
         {
             string selectedAnswer = answer as string; 
 
@@ -328,11 +357,15 @@ namespace QuizApplication_1.ViewModel
 
             if (selectedAnswer == ActiveQuestion.CorrectAnswer)
             {
-                //add if() if the quiz is over show points and press button to return to configview
+                
                 InputAnswer = $"That is the correct Answer! you get one point!";
+                QuestionStep++;
+                Indexer++;
+                await Task.Delay(3000);
+                LoadQuestion();
                 Points++;
                 
-                return;
+                LoadQuestion();
             }else if(selectedAnswer==string.Empty && QuestionTick == 5)
             {
                 InputAnswer = "No answer selected!";
@@ -342,7 +375,10 @@ namespace QuizApplication_1.ViewModel
             else if(selectedAnswer != ActiveQuestion.CorrectAnswer)
             {
                 InputAnswer = $"That is the wrong answer, the correct answer is {ActiveQuestion.CorrectAnswer}";
+                QuestionStep++;
                 Indexer++;
+                Task.Delay(2000);
+                LoadQuestion();
                 return;
             }
 
